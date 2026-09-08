@@ -24,5 +24,11 @@ abstract final class SpotifyFailureMessages {
   static const remoteDisconnected =
       'Lost connection to Spotify. Open Spotify and try again.';
 
+  static const connectionTimeout =
+      'Spotify connection timed out. Open the Spotify app and make sure a track is playing, then try again.';
+
+  static const couldNotConnect =
+      'Could not connect to Spotify. Make sure the Spotify app is open and logged in.';
+
   static const generic = 'Something went wrong with Spotify. Please try again.';
 }

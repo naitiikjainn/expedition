@@ -6,13 +6,9 @@ Expedition helps users track outdoor activities, analyze training trends, manage
 
 ## Screenshots
 
-| Home Dashboard | Activity Tracking | Analytics |
-|----------------|-------------------|-----------|
-| _Add screenshot: `docs/screenshots/home.png`_ | _Add screenshot: `docs/screenshots/activity.png`_ | _Add screenshot: `docs/screenshots/analytics.png`_ |
-
-| History | Profile | Rewards |
-|---------|---------|---------|
-| _Add screenshot: `docs/screenshots/history.png`_ | _Add screenshot: `docs/screenshots/profile.png`_ | _Add screenshot: `docs/screenshots/rewards.png`_ |
+| Live Activity Tracking | Choose Activity | Activity Settings | Goals & App Settings |
+|:---:|:---:|:---:|:---:|
+| <img src="assets/screenshots/activity_map.jpg" width="220" alt="Live Activity Tracking" /> | <img src="assets/screenshots/activity_picker.jpg" width="220" alt="Choose Activity" /> | <img src="assets/screenshots/activity_settings.jpg" width="220" alt="Activity Settings" /> | <img src="assets/screenshots/app_settings.jpg" width="220" alt="App Settings" /> |
 
 ## Tech stack
 

@@ -125,6 +125,8 @@ class _SettingsBody extends StatelessWidget {
               value: preferences.dailyStepGoal.toDouble(),
               displayValue:
                   '${_stepsFormat.format(preferences.dailyStepGoal)} steps',
+              valueFormatter: (value) =>
+                  '${_stepsFormat.format(value.round())} steps',
               min: 1000,
               max: 30000,
               divisions: 58,
@@ -142,6 +144,7 @@ class _SettingsBody extends StatelessWidget {
               label: 'Daily Calorie Goal',
               value: preferences.dailyCalorieGoal.toDouble(),
               displayValue: '${preferences.dailyCalorieGoal} kcal',
+              valueFormatter: (value) => '${value.round()} kcal',
               min: 100,
               max: 3000,
               divisions: 58,
@@ -161,6 +164,9 @@ class _SettingsBody extends StatelessWidget {
               displayValue: preferences.usesMetric
                   ? '${preferences.dailyDistanceGoalKm.toStringAsFixed(1)} km'
                   : '${(preferences.dailyDistanceGoalKm * 0.621371).toStringAsFixed(1)} mi',
+              valueFormatter: (value) => preferences.usesMetric
+                  ? '${value.toStringAsFixed(1)} km'
+                  : '${(value * 0.621371).toStringAsFixed(1)} mi',
               min: 1,
               max: 30,
               divisions: 58,

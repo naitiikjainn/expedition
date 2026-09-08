@@ -81,7 +81,11 @@ class _WorkoutRouteMapState extends State<WorkoutRouteMap>
     final brightness = Theme.of(context).brightness;
     if (_mapBrightness != brightness) {
       _mapBrightness = brightness;
-      _controller?.setMapStyle(MapStyles.forContext(context));
+      if (mounted && _controller != null) {
+        try {
+          _controller?.setMapStyle(MapStyles.forContext(context));
+        } catch (_) {}
+      }
     }
   }
 

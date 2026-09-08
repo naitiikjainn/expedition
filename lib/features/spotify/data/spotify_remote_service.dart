@@ -18,19 +18,29 @@ class SpotifyRemoteService {
 
   bool get isConnected => _isConnected;
 
-  Future<void> connect({String? accessToken}) async {
+  Future<void> connect({
+    String? accessToken,
+    Duration timeout = const Duration(seconds: 12),
+  }) async {
     try {
       final connected = await SpotifySdk.connectToSpotifyRemote(
         clientId: SpotifyConfig.clientId,
         redirectUrl: SpotifyConfig.redirectUri,
         accessToken: accessToken,
+      ).timeout(
+        timeout,
+        onTimeout: () {
+          throw TimeoutException('Spotify connection timed out');
+        },
       );
 
       if (!connected) {
-        throw const SpotifyException(SpotifyFailureMessages.remoteDisconnected);
+        throw const SpotifyException(SpotifyFailureMessages.couldNotConnect);
       }
 
       _isConnected = true;
+    } on TimeoutException {
+      throw const SpotifyException(SpotifyFailureMessages.connectionTimeout);
     } on PlatformException catch (error) {
       throw _mapPlatformException(error);
     } on MissingPluginException {
@@ -74,11 +84,16 @@ class SpotifyRemoteService {
 
   Future<SpotifyPlayerState> getCurrentPlayerState() async {
     try {
-      final state = await SpotifySdk.getPlayerState();
+      final state = await SpotifySdk.getPlayerState().timeout(
+        const Duration(seconds: 4),
+        onTimeout: () => null,
+      );
       if (state == null) {
         return const SpotifyPlayerState();
       }
       return _mapPlayerState(state);
+    } on TimeoutException {
+      return const SpotifyPlayerState();
     } on PlatformException catch (error) {
       throw _mapPlatformException(error);
     }

@@ -18,6 +18,7 @@ class LiquidGoalSlider extends StatefulWidget {
     required this.max,
     required this.divisions,
     required this.onChanged,
+    this.valueFormatter,
     super.key,
   });
 
@@ -30,6 +31,7 @@ class LiquidGoalSlider extends StatefulWidget {
   final double max;
   final int divisions;
   final ValueChanged<double> onChanged;
+  final String Function(double value)? valueFormatter;
 
   @override
   State<LiquidGoalSlider> createState() => _LiquidGoalSliderState();
@@ -128,7 +130,9 @@ class _LiquidGoalSliderState extends State<LiquidGoalSlider> {
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
-                child: Text(widget.displayValue),
+                child: Text(
+                  widget.valueFormatter?.call(_localValue) ?? widget.displayValue,
+                ),
               ),
             ],
           ),

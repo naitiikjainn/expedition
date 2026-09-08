@@ -63,10 +63,16 @@ class SpotifyBloc extends Bloc<SpotifyEvent, SpotifyState> {
         isAuthenticated: authenticated,
         errorMessage: error.message,
       ));
-    } on Exception {
+    } catch (error) {
+      final authenticated = await _repository.hasStoredSession().catchError((_) => false);
       emit(state.copyWith(
-        status: SpotifyStatus.error,
-        errorMessage: SpotifyFailureMessages.generic,
+        status: authenticated
+            ? SpotifyStatus.disconnected
+            : SpotifyStatus.error,
+        isAuthenticated: authenticated,
+        errorMessage: error is Exception
+            ? SpotifyFailureMessages.generic
+            : 'Unable to connect to Spotify. Please try again.',
       ));
     }
   }

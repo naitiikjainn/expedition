@@ -33,20 +33,21 @@ class SpotifyRepository {
       return;
     }
 
-    if (Platform.isAndroid) {
-      await _remoteService.connect();
-      await _authService.markSessionAuthorized();
-      await _startPlayerStateBridge();
-      return;
-    }
-
     final restoredToken = await _authService.restoreAccessToken();
-    final accessToken =
-        restoredToken ?? await _authService.authenticateForPlatform();
 
-    if (accessToken == null) {
-      throw const SpotifyException(SpotifyFailureMessages.generic);
+    if (Platform.isAndroid) {
+      try {
+        await _remoteService.connect(accessToken: restoredToken);
+        await _authService.markSessionAuthorized();
+        await _startPlayerStateBridge();
+        return;
+      } on SpotifyException catch (_) {
+        // Fall back to Web PKCE auth below if direct native remote connection fails
+      }
     }
+
+    final accessToken =
+        restoredToken ?? await _authService.authenticateWithWebAuth();
 
     await _remoteService.connect(accessToken: accessToken);
     await _authService.markSessionAuthorized();

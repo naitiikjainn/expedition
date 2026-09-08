@@ -18,23 +18,12 @@ class ActivityMap extends StatefulWidget {
 class _ActivityMapState extends State<ActivityMap> {
   GoogleMapController? _controller;
   LatLng? _lastFollowedPosition;
-  Brightness? _mapBrightness;
 
   static const _initialPosition = LatLng(28.6139, 77.2090);
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final brightness = Theme.of(context).brightness;
-    if (_mapBrightness != brightness) {
-      _mapBrightness = brightness;
-      _controller?.setMapStyle(MapStyles.forContext(context));
-    }
-  }
-
-  @override
   void dispose() {
-    _controller?.dispose();
+    _controller = null;
     super.dispose();
   }
 
